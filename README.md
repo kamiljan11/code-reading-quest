@@ -1,6 +1,6 @@
 # Code Reading Quest
 
-**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs — 36+ sessions and counting.
+**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs — 40+ sessions and counting.
 
 Every snippet in this repo was run through a real interpreter (`node` / `python3`) before the answer key was written down. No guessed outputs.
 

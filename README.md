@@ -1,8 +1,8 @@
 # Code Reading Quest
 
-**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs — 40+ sessions and counting.
+**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs, run by an autonomous agent — session 45 and counting, the ten most recent published here.
 
-Every snippet in this repo was run through a real interpreter (`node` / `python3`) before the answer key was written down. No guessed outputs.
+Every snippet in this repo was run through a real interpreter (`node` / `python3`) **before** the answer key was written down. No guessed outputs. That constraint is enforced by the pipeline, not by discipline: the agent that writes a session cannot produce the `Verified` block without executing the code first.
 
 ## Motivation
 
@@ -27,7 +27,33 @@ Each session file contains:
 - **Quiz** — three no-hint questions with keys
 - **Card** — the spaced-repetition card banked from the session (SM-2 scheduling)
 
-The wider system (progress state, encounter bank, review cycles) lives in a private Obsidian vault; this repo is the daily public artifact.
+## How it works
+
+Nobody writes these sessions by hand. A scheduled agent runs every morning, unattended, and the interesting part is not the lessons — it is that the pipeline refuses to publish anything it has not executed.
+
+```mermaid
+flowchart TD
+    A[Daily cron trigger] --> B[Agent reads state:<br/>progress, weakest concepts,<br/>spaced-repetition queue]
+    B --> C[Selects next atomic concept<br/>weakest item first]
+    C --> D[Drafts encounter:<br/>scenario + two snippets + quiz]
+    D --> E{Execute snippets<br/>node / python3}
+    E -->|actual stdout| F[Answer key written<br/>from real output only]
+    F --> G[(State store:<br/>progress + encounter bank)]
+    F --> H[Session file committed<br/>to this repo]
+    G --> I[Local HTML app]
+    I --> J[Learner predicts cold,<br/>answers are graded by an LLM]
+    J --> G
+```
+
+Design decisions worth naming:
+
+- **Verification is a gate, not a step.** The answer key is generated *from* captured stdout. A wrong prediction by the agent becomes a failed run, not a wrong lesson published to the internet.
+- **The agent feeds; it never scores.** Writing the lesson and grading the answer are separate processes with separate write permissions. The agent that authors a session cannot award progress for it — that removes the obvious way for the system to flatter itself.
+- **State lives in plain Markdown**, updated through anchored marker blocks and surgical edits rather than file rewrites. That decision came from an incident: an early run used a whole-file rewrite and destroyed months of archived sessions. Append-and-anchor is now a hard rule, with a backup taken before every structured write.
+- **Free-text answers are graded by an LLM** against a stored key, and the result is written back to the state store idempotently — one scored session per day, re-runs are no-ops.
+- **Content is banked, not consumed.** Every session is also stored as a structured record with its verified output, so a lesson can be re-served weeks later. A weekly cycle re-executes the oldest records and corrects any whose stored output no longer matches reality.
+
+The state store and review cycles live in a private vault; this repo is the daily public artifact.
 
 ## Contributing
 

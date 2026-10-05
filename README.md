@@ -1,6 +1,6 @@
 # Code Reading Quest
 
-**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs, run by an autonomous agent — 80+ sessions and counting, the most recent dozen published here.
+**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs, run by an autonomous agent — 80+ sessions and counting. The sessions currently published here run from S59 (2026-08-28) onward; earlier ones were rotated out of the working tree and remain in the git history.
 
 Every snippet in this repo was run through a real interpreter (`node` / `python3`) **before** the answer key was written down. No guessed outputs. That constraint is enforced by the pipeline, not by discipline: the agent that writes a session cannot produce the `Verified` block without executing the code first.
 
@@ -9,6 +9,15 @@ Every snippet in this repo was run through a real interpreter (`node` / `python3
 I build and operate production systems for my own companies in Iceland (a 13-stage quote-to-order pipeline, a freight marketplace, a multi-market pricing SaaS) — most of it shipped with heavy AI assistance. That workflow has one bottleneck: **you can only trust AI-written code as far as you can read it.**
 
 I tried passive tutorials; they didn't stick. What stuck was the loop borrowed from learning science: recall from memory, predict the output cold, verify against a real run, quiz without hints, bank a spaced-repetition card. This repo is the public trail of that loop — one session per day.
+
+## Repository layout
+
+```
+sessions/YYYY-MM-DD-S<N>.md   one file per daily session (the only content of this repo)
+LICENSE                       MIT
+```
+
+There is no application code, build or test suite here: the repo is a log of sessions. Documentation for operating it: [`docs/RUNBOOK.md`](docs/RUNBOOK.md); history: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Quick Start
 

@@ -1,6 +1,6 @@
 # Code Reading Quest
 
-**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs, run by an autonomous agent — 80+ sessions and counting. The sessions currently published here run from S59 (2026-08-28) onward; earlier ones were rotated out of the working tree and remain in the git history.
+**Predict the output before you run it.** A daily code-reading discipline with spaced repetition and verified outputs, run by an autonomous agent — 90+ sessions and counting. The sessions currently published here run from S59 (2026-08-28) onward; earlier ones were rotated out of the working tree and remain in the git history.
 
 Every snippet in this repo was run through a real interpreter (`node` / `python3`) **before** the answer key was written down. No guessed outputs. That constraint is enforced by the pipeline, not by discipline: the agent that writes a session cannot produce the `Verified` block without executing the code first.
 
